@@ -1,24 +1,33 @@
+import { type Graphics } from "./Graphics.ts";
+
 export interface GameOptions {
   msPerUpdate: number;
   maxUpdatesPerCycle: number;
+  graphics: Graphics;
 }
 
 export class Game {
   private readonly msPerUpdate: number;
   private readonly maxUpdatesPerCycle: number;
+  private readonly graphics: Graphics;
 
   private loopRaf: number | undefined;
 
-  constructor({ msPerUpdate, maxUpdatesPerCycle }: GameOptions) {
+  public constructor({
+    msPerUpdate,
+    maxUpdatesPerCycle,
+    graphics,
+  }: GameOptions) {
     this.msPerUpdate = msPerUpdate;
     this.maxUpdatesPerCycle = maxUpdatesPerCycle;
+    this.graphics = graphics;
   }
 
   public start() {
     this.stop();
 
     let previousTime: DOMHighResTimeStamp | undefined;
-    let lag = this.msPerUpdate;
+    let lag = 0;
 
     const loop = (currentTime: DOMHighResTimeStamp) => {
       this.loopRaf = requestAnimationFrame(loop);
@@ -50,7 +59,7 @@ export class Game {
     /* todo */
   }
 
-  private draw(interp: number) {
-    /* todo */
+  private draw(lag: number) {
+    this.graphics.clear();
   }
 }
