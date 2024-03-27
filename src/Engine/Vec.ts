@@ -1,4 +1,4 @@
 export interface Vec {
-  readonly x: number;
-  readonly y: number;
+  x: number;
+  y: number;
 }
