@@ -36,7 +36,7 @@ export class EngineLoop {
 
       let iters = maxUpdatesPerCycle;
       while (lag >= this.msPerUpdate && --iters > 0) {
-        this.game.update(this.msPerUpdate);
+        this.game.update();
         lag -= this.msPerUpdate;
       }
 
