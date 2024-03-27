@@ -1,25 +1,37 @@
-import { type Dim, type EngineGame, type Graphics } from "../Engine";
+import {
+  type Dim,
+  type EngineGame,
+  type Graphics,
+  type Vec,
+  Units,
+} from "../Engine";
 
-export const MS_PER_UPDATE = 16;
+export const MS_PER_UPDATE = 1000 / 60;
 export const CANVAS_DIM: Dim = { w: 320, h: 240 };
 
+const units = new Units(MS_PER_UPDATE);
+
 export class Game implements EngineGame {
-  private x = 0;
-  private dx = 0;
+  private pos: Vec = { x: 0, y: 0 };
+  private vel: Vec = { x: 0, y: 0 };
+  private accel: Vec = { x: 10 * units.perSecond, y: 0 };
 
   update(): void {
-    if (this.x < 310) {
-      this.dx = (MS_PER_UPDATE / 1000) * 240;
-      this.x += this.dx;
+    if (this.pos.x < 310) {
+      this.pos.x += this.vel.x;
+      this.vel.x += this.accel.x;
+
+      this.vel.x = Math.min(this.vel.x, 240 * units.perSecond);
     } else {
-      this.x = 310;
-      this.dx = 0;
+      this.pos.x = 310;
+      this.vel.x = 0;
+      this.accel.x = 0;
     }
   }
 
-  draw(graphics: Graphics, lag: number): void {
+  draw(graphics: Graphics): void {
     graphics.fillRect(
-      { x: Math.floor(this.x + this.dx * lag), y: 100, w: 10, h: 10 },
+      { x: Math.floor(this.pos.x), y: 100, w: 10, h: 10 },
       "plum",
     );
   }

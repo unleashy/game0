@@ -22,26 +22,18 @@ export class EngineLoop {
   public start() {
     this.stop();
 
-    // stop after 500 ms of updating
-    const maxUpdatesPerCycle = Math.floor(500 / this.msPerUpdate);
-
-    let previousTime: DOMHighResTimeStamp | undefined;
-    let lag = 0;
-    const loop = (currentTime: DOMHighResTimeStamp) => {
+    let lastRenderTime = 0;
+    const loop = (currentTime: number) => {
       this.loopRaf = requestAnimationFrame(loop);
 
-      let elapsedTime = currentTime - (previousTime ?? currentTime);
-      previousTime = currentTime;
-      lag += elapsedTime;
+      let elapsedTime = currentTime - lastRenderTime;
+      if (elapsedTime > this.msPerUpdate) {
+        lastRenderTime = currentTime - (elapsedTime % this.msPerUpdate);
 
-      let iters = maxUpdatesPerCycle;
-      while (lag >= this.msPerUpdate && --iters > 0) {
         this.game.update();
-        lag -= this.msPerUpdate;
+        this.graphics.clear();
+        this.game.draw(this.graphics);
       }
-
-      this.graphics.clear();
-      this.game.draw(this.graphics, lag / this.msPerUpdate);
     };
 
     this.loopRaf = requestAnimationFrame(loop);
