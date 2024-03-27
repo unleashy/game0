@@ -16,7 +16,7 @@ export class CanvasGraphics implements Graphics {
   }
 
   public clear(): void {
-    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+    this.ctx.reset();
   }
 
   public fillRect(rect: Rect, colour: string) {
