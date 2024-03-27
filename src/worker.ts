@@ -1,6 +1,6 @@
-import { type Packet } from "./packet.ts";
-import { Game } from "./Game/Game.ts";
-import { CanvasGraphics } from "./Game/Graphics.ts";
+import { type Packet } from "./Packet.ts";
+import { EngineLoop, CanvasGraphics } from "./Engine";
+import { Game } from "./Game";
 
 // eslint-disable-next-line unicorn/prefer-add-event-listener
 self.onmessage = (message) => {
@@ -8,13 +8,10 @@ self.onmessage = (message) => {
 
   switch (packet.op) {
     case "start": {
-      const game = new Game({
+      new EngineLoop(new Game(), {
         msPerUpdate: 16,
-        maxUpdatesPerCycle: 65,
         graphics: new CanvasGraphics(packet.canvas),
-      });
-
-      game.start();
+      }).start();
     }
   }
 };

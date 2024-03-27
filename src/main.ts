@@ -1,4 +1,4 @@
-import { type Packet } from "./packet.ts";
+import { type Packet } from "./Packet.ts";
 import "./style.css";
 
 const worker = new Worker(new URL("worker.ts", import.meta.url), {
