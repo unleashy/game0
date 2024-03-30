@@ -8,10 +8,10 @@ self.onmessage = (message) => {
 
   switch (packet.op) {
     case "start": {
-      new EngineLoop(new Game(), {
-        msPerUpdate: MS_PER_UPDATE,
-        graphics: new CanvasGraphics(packet.canvas, CANVAS_DIM),
-      }).start();
+      new EngineLoop(
+        new Game(new CanvasGraphics(packet.canvas, CANVAS_DIM)),
+        MS_PER_UPDATE,
+      ).start();
     }
   }
 };

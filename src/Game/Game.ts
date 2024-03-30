@@ -16,6 +16,8 @@ export class Game implements EngineGame {
   private vel: Vec = { x: 0, y: 0 };
   private accel: Vec = { x: 10 * units.perSecond, y: 0 };
 
+  constructor(private readonly graphics: Graphics) {}
+
   update(): void {
     if (this.pos.x < 310) {
       this.pos.x += this.vel.x;
@@ -29,8 +31,10 @@ export class Game implements EngineGame {
     }
   }
 
-  draw(graphics: Graphics): void {
-    graphics.fillRect(
+  draw(): void {
+    this.graphics.clear();
+
+    this.graphics.fillRect(
       { x: Math.floor(this.pos.x), y: 100, w: 10, h: 10 },
       "plum",
     );

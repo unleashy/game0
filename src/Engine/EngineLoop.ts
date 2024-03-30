@@ -1,23 +1,12 @@
 import { type EngineGame } from "./EngineGame.ts";
-import { type Graphics } from "./Graphics.ts";
-
-export interface EngineLoopOptions {
-  msPerUpdate: number;
-  graphics: Graphics;
-}
 
 export class EngineLoop {
-  private readonly game: EngineGame;
-  private readonly msPerUpdate: number;
-  private readonly graphics: Graphics;
-
   private loopRaf: number | undefined;
 
-  constructor(game: EngineGame, { msPerUpdate, graphics }: EngineLoopOptions) {
-    this.game = game;
-    this.msPerUpdate = msPerUpdate;
-    this.graphics = graphics;
-  }
+  constructor(
+    private readonly game: EngineGame,
+    private readonly msPerUpdate: number,
+  ) {}
 
   public start() {
     this.stop();
@@ -31,8 +20,7 @@ export class EngineLoop {
         lastRenderTime = currentTime - (elapsedTime % this.msPerUpdate);
 
         this.game.update();
-        this.graphics.clear();
-        this.game.draw(this.graphics);
+        this.game.draw();
       }
     };
 
