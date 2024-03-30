@@ -1,6 +1,7 @@
+import { type Vec } from "./Vec.ts";
+import { type Dim } from "./Dim.ts";
 import { type Rect } from "./Rect.ts";
 import { type Graphics } from "./Graphics.ts";
-import { type Dim } from "./Dim.ts";
 
 export class CanvasGraphics implements Graphics {
   private readonly ctx: OffscreenCanvasRenderingContext2D;
@@ -22,5 +23,23 @@ export class CanvasGraphics implements Graphics {
   public fillRect(rect: Rect, colour: string) {
     this.ctx.fillStyle = colour;
     this.ctx.fillRect(rect.x, rect.y, rect.w, rect.h);
+  }
+
+  public draw(image: ImageBitmap, at: Vec, slice?: Rect): void {
+    if (slice) {
+      this.ctx.drawImage(
+        image,
+        slice.x,
+        slice.y,
+        slice.w,
+        slice.h,
+        at.x,
+        at.y,
+        slice.w,
+        slice.h,
+      );
+    } else {
+      this.ctx.drawImage(image, at.x, at.y);
+    }
   }
 }
