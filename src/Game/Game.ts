@@ -19,13 +19,14 @@ export class Game implements EngineGame {
   constructor(private readonly graphics: Graphics) {}
 
   update(): void {
-    if (this.pos.x < 310) {
+    let rightWall = this.graphics.dimensions.w - 10;
+    if (this.pos.x < rightWall) {
       this.pos.x += this.vel.x;
       this.vel.x += this.accel.x;
 
       this.vel.x = Math.min(this.vel.x, 240 * units.perSecond);
     } else {
-      this.pos.x = 310;
+      this.pos.x = rightWall;
       this.vel.x = 0;
       this.accel.x = 0;
     }

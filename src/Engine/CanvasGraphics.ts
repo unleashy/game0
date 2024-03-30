@@ -6,9 +6,12 @@ import { type Graphics } from "./Graphics.ts";
 export class CanvasGraphics implements Graphics {
   private readonly ctx: OffscreenCanvasRenderingContext2D;
 
-  public constructor(canvas: OffscreenCanvas, canvasDim: Dim) {
-    canvas.width = canvasDim.w;
-    canvas.height = canvasDim.h;
+  public constructor(
+    canvas: OffscreenCanvas,
+    readonly dimensions: Dim,
+  ) {
+    canvas.width = dimensions.w;
+    canvas.height = dimensions.h;
 
     let ctx = canvas.getContext("2d", { alpha: false, desynchronized: true });
     if (!ctx) throw new Error("Cannot create canvas context");
