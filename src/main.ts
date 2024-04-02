@@ -13,6 +13,18 @@ requestIdleCallback(
     worker.postMessage({ op: "start", canvas: offscreen } satisfies Packet, [
       offscreen,
     ]);
+
+    document.addEventListener("keydown", (event) => {
+      worker.postMessage({
+        op: "keyDown",
+        code: event.code,
+        repeat: event.repeat,
+      } satisfies Packet);
+    });
+
+    document.addEventListener("keyup", (event) => {
+      worker.postMessage({ op: "keyUp", code: event.code } satisfies Packet);
+    });
   },
   { timeout: 3000 },
 );
