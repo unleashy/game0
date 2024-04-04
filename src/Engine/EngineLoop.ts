@@ -3,7 +3,7 @@ import { type EngineGame } from "./EngineGame.ts";
 export class EngineLoop {
   private loopRaf: number | undefined;
 
-  constructor(
+  public constructor(
     private readonly game: EngineGame,
     private readonly msPerUpdate: number,
   ) {}

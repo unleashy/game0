@@ -19,7 +19,7 @@ export class Game implements EngineGame, InputObserver {
   private accel: Vec = { x: 0, y: 0 };
   private moveDir: string | undefined;
 
-  constructor(private readonly graphics: Graphics) {}
+  public constructor(private readonly graphics: Graphics) {}
 
   public onKeyDown(_input: Input, code: string) {
     if (code === "ArrowLeft") {
