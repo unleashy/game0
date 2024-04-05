@@ -1,5 +1,4 @@
 import {
-  type Dim,
   type EngineGame,
   type Graphics,
   type Input,
@@ -9,7 +8,6 @@ import {
 } from "../Engine";
 
 export const MS_PER_UPDATE = 1000 / 60;
-export const CANVAS_DIM: Dim = { w: 320, h: 240 };
 
 const units = new Units(MS_PER_UPDATE);
 
@@ -77,6 +75,6 @@ export class Game implements EngineGame, InputObserver {
   }
 }
 
-function clamp(min: number, x: number, max: number) {
-  return Math.max(min, Math.min(x, max));
+function clamp(min: number, n: number, max: number) {
+  return Math.max(min, Math.min(n, max));
 }
