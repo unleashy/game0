@@ -1,6 +1,6 @@
 import {
   type Vec,
-  type Graphics,
+  type Sprite,
   type InputObserver,
   type Input,
 } from "../Engine";
@@ -11,6 +11,8 @@ export class Player implements InputObserver {
   private vel: Vec = { x: 0, y: 0 };
   private accel: Vec = { x: 0, y: 0 };
   private moveDir: string | undefined;
+
+  public constructor(private readonly sprite: Sprite) {}
 
   public onKeyDown(_input: Input, code: string) {
     if (code === "ArrowLeft") {
@@ -51,11 +53,8 @@ export class Player implements InputObserver {
     this.vel.x = limit(this.vel.x, 240 * units.perSecond);
   }
 
-  public draw(graphics: Graphics): void {
-    graphics.fillRect(
-      { x: Math.floor(this.pos.x), y: Math.floor(this.pos.y), w: 10, h: 10 },
-      "plum",
-    );
+  public draw(): void {
+    this.sprite.draw({ x: Math.floor(this.pos.x), y: Math.floor(this.pos.y) });
   }
 }
 

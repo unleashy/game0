@@ -1,5 +1,10 @@
 import { type Packet } from "./Packet.ts";
-import { EngineLoop, CanvasGraphics, InputHandler } from "./Engine";
+import {
+  EngineLoop,
+  CanvasGraphics,
+  InputHandler,
+  CanvasRectSprite,
+} from "./Engine";
 import { Player, Game, MS_PER_UPDATE } from "./Game";
 
 interface WorkerState {
@@ -17,9 +22,10 @@ self.onmessage = (message) => {
     case "start": {
       if (state) throw new Error("Invalid state for start packet");
 
+      let graphics = new CanvasGraphics(packet.canvas, packet.dimensions);
       let game = new Game(
-        new CanvasGraphics(packet.canvas, packet.dimensions),
-        new Player(),
+        graphics,
+        new Player(new CanvasRectSprite(graphics, { w: 10, h: 10 }, "plum")),
       );
       let input = new InputHandler(game);
       let engineLoop = new EngineLoop(game, MS_PER_UPDATE);

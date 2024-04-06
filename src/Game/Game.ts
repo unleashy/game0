@@ -27,6 +27,6 @@ export class Game implements EngineGame, InputObserver {
   public draw(): void {
     this.graphics.clear();
 
-    this.player.draw(this.graphics);
+    this.player.draw();
   }
 }
