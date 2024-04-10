@@ -1,5 +1,5 @@
 import { useCallback, useEffect } from "react";
-import type { Packet } from "../Packet.ts";
+import { type Packet } from "../Packet.ts";
 
 export interface AppProps {
   sendPacket: (packet: Packet, transfer?: Transferable[]) => void;
@@ -35,31 +35,30 @@ export function App({ sendPacket }: AppProps) {
   );
 
   useEffect(() => {
-    function handleKeyDown(event: KeyboardEvent) {
-      if (
+    function isApplicable(event: KeyboardEvent): boolean {
+      return !(
         event.repeat ||
         event.isComposing ||
         (event.target as Node).nodeName === "INPUT"
-      )
-        return;
-
-      sendPacket({ op: "keyDown", code: event.code });
-    }
-
-    function handleKeyUp(event: KeyboardEvent) {
-      if (event.isComposing || (event.target as Node).nodeName === "INPUT")
-        return;
-
-      sendPacket({ op: "keyUp", code: event.code });
+      );
     }
 
     const controller = new AbortController();
-    document.addEventListener("keydown", handleKeyDown, {
-      signal: controller.signal,
-    });
-    document.addEventListener("keyup", handleKeyUp, {
-      signal: controller.signal,
-    });
+    document.addEventListener(
+      "keydown",
+      (event) => {
+        if (isApplicable(event))
+          sendPacket({ op: "keyDown", code: event.code });
+      },
+      { signal: controller.signal },
+    );
+    document.addEventListener(
+      "keyup",
+      (event) => {
+        if (isApplicable(event)) sendPacket({ op: "keyUp", code: event.code });
+      },
+      { signal: controller.signal },
+    );
     return () => controller.abort();
   }, [sendPacket]);
 
@@ -94,20 +93,20 @@ export function App({ sendPacket }: AppProps) {
           className="numeric-input"
         />
 
-        <label htmlFor="movement-accel">Movement acceleration</label>
-        <input
-          id="movement-accel"
-          type="number"
-          defaultValue={2000}
-          className="numeric-input"
-        />
-
         <label htmlFor="friction">Coefficient of friction</label>
         <input
           id="friction"
           type="number"
           step="0.01"
           defaultValue={0.9}
+          className="numeric-input"
+        />
+
+        <label htmlFor="movement-accel">Movement acceleration</label>
+        <input
+          id="movement-accel"
+          type="number"
+          defaultValue={2000}
           className="numeric-input"
         />
 
