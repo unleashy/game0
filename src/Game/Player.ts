@@ -1,15 +1,18 @@
-import {
-  type Vec,
-  type Sprite,
-  type InputObserver,
-  type Input,
-} from "../Engine";
+import { Vec, type Sprite, type InputObserver, type Input } from "../Engine";
 import { units } from "./units.ts";
+
+const GRAVITY = 980 * units.perSecondSquared;
+const FRICTION = 0.9 * GRAVITY;
+const MOVE_ACCEL = 2000 * units.perSecondSquared;
+const MAX_VELOCITY: Vec = {
+  x: 300 * units.perSecond,
+  y: 550 * units.perSecond,
+};
 
 export class Player implements InputObserver {
   private pos: Vec = { x: 0, y: 100 };
   private vel: Vec = { x: 0, y: 0 };
-  private accel: Vec = { x: 0, y: 0 };
+  private accel: Vec = { x: 0, y: GRAVITY };
   private moveDir: string | undefined;
 
   public constructor(private readonly sprite: Sprite) {}
@@ -31,37 +34,29 @@ export class Player implements InputObserver {
   }
 
   public update(): void {
+    let moveForceX = 0;
     // prettier-ignore
     switch (this.moveDir) {
-      case "→": { this.accel.x = +240 * units.perSecond; break; }
-      case "←": { this.accel.x = -240 * units.perSecond; break; }
-      default:  { this.accel.x = 0; break; }
+      case "→": { moveForceX = +MOVE_ACCEL; break; }
+      case "←": { moveForceX = -MOVE_ACCEL; break; }
     }
 
-    this.pos.x += this.vel.x;
+    let frictionForceX = Math.sign(this.vel.x) * FRICTION;
 
-    if (this.accel.x === 0) {
-      if (this.vel.x <= -0.01 || 0.01 <= this.vel.x) {
-        this.vel.x *= 0.7;
-      } else {
-        this.vel.x = 0;
-      }
-    } else {
-      this.vel.x += this.accel.x;
+    this.accel.x = moveForceX - frictionForceX;
+
+    let prevVelX = this.vel.x;
+    this.vel = Vec.add(this.vel, this.accel);
+    this.vel = Vec.limit(this.vel, MAX_VELOCITY);
+    if (moveForceX === 0 && Math.sign(prevVelX) !== Math.sign(this.vel.x)) {
+      this.vel.x = 0;
     }
 
-    this.vel.x = limit(this.vel.x, 240 * units.perSecond);
+    this.pos = Vec.add(this.pos, this.vel);
+    this.pos.y = Math.min(this.pos.y, 230);
   }
 
   public draw(): void {
-    this.sprite.draw({ x: Math.floor(this.pos.x), y: Math.floor(this.pos.y) });
+    this.sprite.draw(Vec.floor(this.pos));
   }
-}
-
-function clamp(min: number, n: number, max: number) {
-  return Math.max(min, Math.min(n, max));
-}
-
-function limit(n: number, max: number) {
-  return clamp(-max, n, max);
 }

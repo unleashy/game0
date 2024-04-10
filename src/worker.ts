@@ -14,6 +14,12 @@ interface WorkerState {
 }
 let state: WorkerState | undefined;
 
+declare global {
+  interface Window {
+    $$state: WorkerState | undefined;
+  }
+}
+
 // eslint-disable-next-line unicorn/prefer-add-event-listener
 self.onmessage = (message) => {
   let packet = message.data as Packet;
@@ -33,6 +39,7 @@ self.onmessage = (message) => {
       engineLoop.start();
 
       state = { game, input, engineLoop };
+      self.$$state = state;
       break;
     }
 
