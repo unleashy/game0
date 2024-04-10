@@ -3,8 +3,8 @@
   background-color: black;
   color: white;
 
-  font-family: Tahoma, sans-serif;
-  font-size: 12px;
+  font-family: Verdana, system-ui, sans-serif;
+  font-size: 11px;
   line-height: 1.5;
 }
 
@@ -58,7 +58,7 @@ h2 {
   grid-template-columns: auto auto;
   align-items: baseline;
   justify-content: start;
-  column-gap: 0.85rem;
+  column-gap: 1ch;
   row-gap: 0.25rem;
 }
 
