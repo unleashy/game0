@@ -6,68 +6,7 @@
     <title>game0</title>
   </head>
   <body>
-    <main>
-      <div>
-        <h2 class="panel-header">Properties</h2>
-
-        <dl class="dl-panel">
-          <dt>Position</dt>
-          <dd>0.000</dd>
-          <dd>0.000</dd>
-
-          <dt>Velocity</dt>
-          <dd>0.000</dd>
-          <dd>0.000</dd>
-
-          <dt>Acceleration</dt>
-          <dd>0.000</dd>
-          <dd>0.000</dd>
-        </dl>
-      </div>
-      <canvas id="main-canvas" width="320" height="240"></canvas>
-      <div class="grid-panel">
-        <h2 class="panel-header">Settings</h2>
-
-        <label for="gravity">Gravity</label>
-        <input id="gravity" type="number" value="980" class="numeric-input" />
-
-        <label for="movement-accel">Movement acceleration</label>
-        <input
-          id="movement-accel"
-          type="number"
-          value="2000"
-          class="numeric-input"
-        />
-
-        <label for="friction">Coefficient of friction</label>
-        <input
-          id="friction"
-          type="number"
-          value="0.9"
-          step="0.01"
-          class="numeric-input"
-        />
-
-        <label for="max-vel-x">Maximum velocity (x)</label>
-        <input
-          id="max-vel-x"
-          type="number"
-          min="0"
-          value="300"
-          class="numeric-input"
-        />
-
-        <label for="max-vel-y">Maximum velocity (y)</label>
-        <input
-          id="max-vel-y"
-          type="number"
-          min="0"
-          value="550"
-          class="numeric-input"
-        />
-      </div>
-    </main>
-
-    <script type="module" src="/src/main.ts"></script>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

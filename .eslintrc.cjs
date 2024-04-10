@@ -4,6 +4,9 @@ module.exports = {
   extends: [
     "eslint:recommended",
     "plugin:unicorn/recommended",
+    "plugin:react/recommended",
+    "plugin:react/jsx-runtime",
+    "plugin:react-hooks/recommended",
     "plugin:@typescript-eslint/strict-type-checked",
     "plugin:@typescript-eslint/stylistic-type-checked",
     "prettier",
@@ -35,7 +38,7 @@ module.exports = {
   overrides: [
     {
       extends: ["plugin:@typescript-eslint/disable-type-checked"],
-      files: ["./**/*.js", "./**/*.cjs", "./**/*.mjs"],
+      files: ["./**/*.js", "./**/*.jsx", "./**/*.cjs", "./**/*.mjs"],
     },
   ],
 };

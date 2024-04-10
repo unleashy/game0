@@ -20,7 +20,10 @@ self.onmessage = (message) => {
 
   switch (packet.op) {
     case "start": {
-      if (state) throw new Error("Invalid state for start packet");
+      if (state) {
+        state.engineLoop.stop();
+        state = undefined;
+      }
 
       let graphics = new CanvasGraphics(packet.canvas, packet.dimensions);
       let game = new Game(
@@ -37,16 +40,12 @@ self.onmessage = (message) => {
     }
 
     case "keyDown": {
-      if (!state) throw new Error("Invalid state for keyDown packet");
-
-      state.input.handleKeyDown(packet.code, packet.repeat);
+      state?.input.handleKeyDown(packet.code);
       break;
     }
 
     case "keyUp": {
-      if (!state) throw new Error("Invalid state for keyUp packet");
-
-      state.input.handleKeyUp(packet.code);
+      state?.input.handleKeyUp(packet.code);
       break;
     }
 

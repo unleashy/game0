@@ -10,11 +10,9 @@ export class InputHandler implements Input {
     return this.pressedKeys.has(code);
   }
 
-  public handleKeyDown(code: string, repeat: boolean): void {
-    if (!repeat) {
-      this.pressedKeys.add(code);
-      this.observer.onKeyDown(this, code);
-    }
+  public handleKeyDown(code: string): void {
+    this.pressedKeys.add(code);
+    this.observer.onKeyDown(this, code);
   }
 
   public handleKeyUp(code: string): void {
