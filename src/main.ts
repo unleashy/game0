@@ -24,10 +24,16 @@ requestIdleCallback(
     );
 
     document.addEventListener("keydown", (event) => {
+      if (event.isComposing || (event.target as Node).nodeName === "INPUT")
+        return;
+
       sendPacket({ op: "keyDown", code: event.code, repeat: event.repeat });
     });
 
     document.addEventListener("keyup", (event) => {
+      if (event.isComposing || (event.target as Node).nodeName === "INPUT")
+        return;
+
       sendPacket({ op: "keyUp", code: event.code });
     });
   },

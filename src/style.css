@@ -1,5 +1,11 @@
 :root {
+  color-scheme: dark;
   background-color: black;
+  color: white;
+
+  font-family: Tahoma, sans-serif;
+  font-size: 12px;
+  line-height: 1.5;
 }
 
 *,
@@ -15,11 +21,73 @@ main {
   height: 100vh;
 
   display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  align-content: center;
+  justify-items: stretch;
   justify-content: center;
-  align-items: center;
+
+  gap: 1rem;
 }
 
 canvas {
-  outline: 2px solid white;
-  outline-offset: 4px;
+  border: 2px solid white;
+  padding: 4px;
+}
+
+input {
+  font: inherit;
+  line-height: inherit;
+  padding: 0.05rem 0.2rem;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 0;
+}
+input:focus {
+  outline: 2px solid plum;
+  outline-offset: -1px;
+}
+
+h2 {
+  font-size: 1.05rem;
+  font-weight: bold;
+}
+
+.grid-panel {
+  display: grid;
+  grid-template-columns: auto auto;
+  align-items: baseline;
+  justify-content: start;
+  column-gap: 0.85rem;
+  row-gap: 0.25rem;
+}
+
+.dl-panel {
+  display: grid;
+  grid-template-columns: 10ch 10ch;
+  column-gap: 1ch;
+}
+.dl-panel > dt {
+  grid-column: 1 / -1;
+  font-style: italic;
+}
+.dl-panel > dd {
+  justify-self: end;
+}
+.dl-panel > dd + dt {
+  margin-top: 0.5rem;
+}
+
+.coordinate-pair {
+}
+
+.panel-header {
+  line-height: 1;
+  text-align: center;
+  padding-bottom: 1rem;
+  grid-column: 1 / -1;
+}
+
+.numeric-input {
+  max-width: 9ch;
 }
