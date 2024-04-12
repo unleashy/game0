@@ -2,15 +2,15 @@ import { Vec, type Sprite, type InputObserver, type Input } from "../Engine";
 import { units } from "./units.ts";
 
 const GRAVITY = 980 * units.perSecondSquared;
-const FRICTION = 0.9 * GRAVITY;
-const MOVE_ACCEL = 2000 * units.perSecondSquared;
+const FRICTION = 2 * GRAVITY;
+const MOVE_ACCEL = 4000 * units.perSecondSquared;
 const MAX_VELOCITY: Vec = {
   x: 300 * units.perSecond,
   y: 550 * units.perSecond,
 };
 
 export class Player implements InputObserver {
-  private pos: Vec = { x: 0, y: 100 };
+  private pos: Vec = { x: 0, y: 0 };
   private vel: Vec = { x: 0, y: 0 };
   private accel: Vec = { x: 0, y: GRAVITY };
   private moveDir: string | undefined;
@@ -41,7 +41,7 @@ export class Player implements InputObserver {
       case "←": { moveForceX = -MOVE_ACCEL; break; }
     }
 
-    let frictionForceX = Math.sign(this.vel.x) * FRICTION;
+    let frictionForceX = Math.sign(this.vel.x + moveForceX) * FRICTION;
 
     this.accel.x = moveForceX - frictionForceX;
 
