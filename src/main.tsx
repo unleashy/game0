@@ -16,6 +16,14 @@ const root = document.querySelector("#root");
 if (!root) throw new Error("No root");
 createRoot(root).render(
   <StrictMode>
-    <App sendPacket={sendPacket} />
+    <App
+      sendPacket={sendPacket}
+      initialSettings={{
+        gravity: 980,
+        friction: 0.9,
+        moveAccel: 4000,
+        maxVelocity: { x: 300, y: 550 },
+      }}
+    />
   </StrictMode>,
 );

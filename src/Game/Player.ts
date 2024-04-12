@@ -1,21 +1,18 @@
 import { Vec, type Sprite, type InputObserver, type Input } from "../Engine";
-import { units } from "./units.ts";
-
-const GRAVITY = 980 * units.perSecondSquared;
-const FRICTION = 2 * GRAVITY;
-const MOVE_ACCEL = 4000 * units.perSecondSquared;
-const MAX_VELOCITY: Vec = {
-  x: 300 * units.perSecond,
-  y: 550 * units.perSecond,
-};
+import { type PlayerSettings } from "./PlayerSettings.ts";
 
 export class Player implements InputObserver {
   private pos: Vec = { x: 0, y: 0 };
   private vel: Vec = { x: 0, y: 0 };
-  private accel: Vec = { x: 0, y: GRAVITY };
+  private accel: Vec = { x: 0, y: 0 };
   private moveDir: string | undefined;
 
-  public constructor(private readonly sprite: Sprite) {}
+  public constructor(
+    public settings: PlayerSettings,
+    private readonly sprite: Sprite,
+  ) {
+    this.accel.y = settings.gravity;
+  }
 
   public onKeyDown(_input: Input, code: string) {
     if (code === "ArrowLeft") {
@@ -37,17 +34,18 @@ export class Player implements InputObserver {
     let moveForceX = 0;
     // prettier-ignore
     switch (this.moveDir) {
-      case "→": { moveForceX = +MOVE_ACCEL; break; }
-      case "←": { moveForceX = -MOVE_ACCEL; break; }
+      case "→": { moveForceX = +this.settings.moveAccel; break; }
+      case "←": { moveForceX = -this.settings.moveAccel; break; }
     }
 
-    let frictionForceX = Math.sign(this.vel.x + moveForceX) * FRICTION;
+    let frictionForceX =
+      Math.sign(this.vel.x + moveForceX) * this.settings.friction;
 
     this.accel.x = moveForceX - frictionForceX;
 
     let prevVelX = this.vel.x;
     this.vel = Vec.add(this.vel, this.accel);
-    this.vel = Vec.limit(this.vel, MAX_VELOCITY);
+    this.vel = Vec.limit(this.vel, this.settings.maxVelocity);
     if (moveForceX === 0 && Math.sign(prevVelX) !== Math.sign(this.vel.x)) {
       this.vel.x = 0;
     }

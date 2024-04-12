@@ -1613,12 +1613,12 @@ __metadata:
   languageName: node
   linkType: hard
 
-"eslint-plugin-react-hooks@npm:^4.6.0":
-  version: 4.6.0
-  resolution: "eslint-plugin-react-hooks@npm:4.6.0"
+"eslint-plugin-react-hooks@npm:experimental":
+  version: 0.0.0-experimental-adb717393-20240411
+  resolution: "eslint-plugin-react-hooks@npm:0.0.0-experimental-adb717393-20240411"
   peerDependencies:
     eslint: ^3.0.0 || ^4.0.0 || ^5.0.0 || ^6.0.0 || ^7.0.0 || ^8.0.0-0
-  checksum: 10c0/58c7e10ea5792c33346fcf5cb4024e14837035ce412ff99c2dcb7c4f903dc9b17939078f80bfef826301ce326582c396c00e8e0ac9d10ac2cde2b42d33763c65
+  checksum: 10c0/8780a2ef78d48f9a8be23d7a537366f79c15ec7fabfaf971f6f8a90534944939997381482775f7f5196962ff422cbf60b074f43d39e8bcec734adf95a94430e3
   languageName: node
   linkType: hard
 
@@ -2001,12 +2001,12 @@ __metadata:
     eslint: "npm:^8.57.0"
     eslint-config-prettier: "npm:^9.1.0"
     eslint-plugin-react: "npm:^7.34.1"
-    eslint-plugin-react-hooks: "npm:^4.6.0"
+    eslint-plugin-react-hooks: "npm:experimental"
     eslint-plugin-react-refresh: "npm:^0.4.6"
     eslint-plugin-unicorn: "npm:^51.0.1"
     prettier: "npm:^3"
-    react: "npm:^18.2.0"
-    react-dom: "npm:^18.2.0"
+    react: "npm:experimental"
+    react-dom: "npm:experimental"
     typescript: "npm:5.4.2"
     vite: "npm:^5.2.7"
   languageName: unknown
@@ -2745,7 +2745,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"loose-envify@npm:^1.1.0, loose-envify@npm:^1.4.0":
+"loose-envify@npm:^1.4.0":
   version: 1.4.0
   resolution: "loose-envify@npm:1.4.0"
   dependencies:
@@ -3322,15 +3322,14 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react-dom@npm:^18.2.0":
-  version: 18.2.0
-  resolution: "react-dom@npm:18.2.0"
+"react-dom@npm:experimental":
+  version: 0.0.0-experimental-adb717393-20240411
+  resolution: "react-dom@npm:0.0.0-experimental-adb717393-20240411"
   dependencies:
-    loose-envify: "npm:^1.1.0"
-    scheduler: "npm:^0.23.0"
+    scheduler: "npm:0.0.0-experimental-adb717393-20240411"
   peerDependencies:
-    react: ^18.2.0
-  checksum: 10c0/66dfc5f93e13d0674e78ef41f92ed21dfb80f9c4ac4ac25a4b51046d41d4d2186abc915b897f69d3d0ebbffe6184e7c5876f2af26bfa956f179225d921be713a
+    react: 0.0.0-experimental-adb717393-20240411
+  checksum: 10c0/a54ad8dedada0d9fc5ea30dcf2576462b60514c19fdafe6d977a1f5ba30dc893ccdc119a40d56e4adea943b999f03549c4dc48a5bb36b25fbadd48f6c00fddd1
   languageName: node
   linkType: hard
 
@@ -3341,12 +3340,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"react@npm:^18.2.0":
-  version: 18.2.0
-  resolution: "react@npm:18.2.0"
-  dependencies:
-    loose-envify: "npm:^1.1.0"
-  checksum: 10c0/b562d9b569b0cb315e44b48099f7712283d93df36b19a39a67c254c6686479d3980b7f013dc931f4a5a3ae7645eae6386b4aa5eea933baa54ecd0f9acb0902b8
+"react@npm:experimental":
+  version: 0.0.0-experimental-adb717393-20240411
+  resolution: "react@npm:0.0.0-experimental-adb717393-20240411"
+  checksum: 10c0/270f63de5abedb431bc3fd6cc5a64b1d8f6c418ddbdcc5078acd47e14a8eeb2f22f10668abd03039606d6b401f88965d86e9bab0024caad2a3470161ba441065
   languageName: node
   linkType: hard
 
@@ -3597,12 +3594,10 @@ __metadata:
   languageName: node
   linkType: hard
 
-"scheduler@npm:^0.23.0":
-  version: 0.23.0
-  resolution: "scheduler@npm:0.23.0"
-  dependencies:
-    loose-envify: "npm:^1.1.0"
-  checksum: 10c0/b777f7ca0115e6d93e126ac490dbd82642d14983b3079f58f35519d992fa46260be7d6e6cede433a92db70306310c6f5f06e144f0e40c484199e09c1f7be53dd
+"scheduler@npm:0.0.0-experimental-adb717393-20240411":
+  version: 0.0.0-experimental-adb717393-20240411
+  resolution: "scheduler@npm:0.0.0-experimental-adb717393-20240411"
+  checksum: 10c0/44ecd4f837f7ed98a1bc73079d18ef9896083b5a15402c5d4bd22075328b06f8993c513236fb5f41953439a90926a3c41b48e9dcb88674be18c4abffdf932910
   languageName: node
   linkType: hard
 

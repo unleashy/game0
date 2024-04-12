@@ -5,9 +5,10 @@ import {
   InputHandler,
   CanvasRectSprite,
 } from "./Engine";
-import { Player, Game, MS_PER_UPDATE } from "./Game";
+import { Player, Game, MS_PER_UPDATE, applyUnits, units } from "./Game";
 
 interface WorkerState {
+  player: Player;
   game: Game;
   input: InputHandler;
   engineLoop: EngineLoop;
@@ -26,16 +27,22 @@ self.onmessage = (message) => {
       }
 
       let graphics = new CanvasGraphics(packet.canvas, packet.dimensions);
-      let game = new Game(
-        graphics,
-        new Player(new CanvasRectSprite(graphics, { w: 10, h: 10 }, "plum")),
+      let player = new Player(
+        applyUnits(packet.settings, units),
+        new CanvasRectSprite(graphics, { w: 10, h: 10 }, "plum"),
       );
+      let game = new Game(graphics, player);
       let input = new InputHandler(game);
       let engineLoop = new EngineLoop(game, MS_PER_UPDATE);
 
       engineLoop.start();
 
-      state = { game, input, engineLoop };
+      state = { player, game, input, engineLoop };
+      break;
+    }
+
+    case "commitSettings": {
+      if (state) state.player.settings = applyUnits(packet.settings, units);
       break;
     }
 
