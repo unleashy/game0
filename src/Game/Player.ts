@@ -1,6 +1,6 @@
 import { Vec, type Sprite, type InputObserver, type Input } from "../Engine";
 import { type PlayerSettings } from "./PlayerSettings.ts";
-import { PlayerProperties } from "./PlayerProperties.ts";
+import { type PlayerProperties } from "./PlayerProperties.ts";
 
 export class Player implements InputObserver {
   private pos: Vec = { x: 0, y: 0 };
@@ -42,7 +42,11 @@ export class Player implements InputObserver {
     let frictionForceX =
       Math.sign(this.vel.x + moveForceX) * this.settings.friction;
 
-    this.accel.x = moveForceX - frictionForceX;
+    if (moveForceX !== 0 && Math.abs(moveForceX) < Math.abs(frictionForceX)) {
+      this.accel.x = 0;
+    } else {
+      this.accel.x = moveForceX - frictionForceX;
+    }
 
     let prevVelX = this.vel.x;
     this.vel = Vec.add(this.vel, this.accel);
