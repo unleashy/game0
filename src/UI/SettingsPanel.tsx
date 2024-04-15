@@ -10,10 +10,28 @@ export function SettingsPanel({
   initialSettings,
   onCommit,
 }: SettingsPanelProps) {
+  function validate({
+    maxVelocity,
+    ...settings
+  }: PlayerSettings): PlayerSettings | false {
+    if (!Object.values(settings).every((v) => Number.isFinite(v))) return false;
+    if (
+      !(
+        Number.isFinite(maxVelocity.x) &&
+        Number.isFinite(maxVelocity.y) &&
+        maxVelocity.x >= 0 &&
+        maxVelocity.y >= 0
+      )
+    )
+      return false;
+
+    return { ...settings, maxVelocity };
+  }
+
   function handleChange(event: FormEvent<HTMLFormElement>) {
     const form = event.currentTarget as Record<string, HTMLInputElement>;
 
-    onCommit({
+    let settings = validate({
       gravity: form.gravity.valueAsNumber,
       friction: form.friction.valueAsNumber,
       moveAccel: form.moveAccel.valueAsNumber,
@@ -22,6 +40,8 @@ export function SettingsPanel({
         y: form.maxVelocityY.valueAsNumber,
       },
     });
+
+    if (settings) onCommit(settings);
   }
 
   return (
