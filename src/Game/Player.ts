@@ -1,5 +1,6 @@
 import { Vec, type Sprite, type InputObserver, type Input } from "../Engine";
 import { type PlayerSettings } from "./PlayerSettings.ts";
+import { PlayerProperties } from "./PlayerProperties.ts";
 
 export class Player implements InputObserver {
   private pos: Vec = { x: 0, y: 0 };
@@ -56,5 +57,9 @@ export class Player implements InputObserver {
 
   public draw(): void {
     this.sprite.draw(Vec.floor(this.pos));
+  }
+
+  public get properties(): PlayerProperties {
+    return { pos: this.pos, vel: this.vel, acc: this.accel };
   }
 }

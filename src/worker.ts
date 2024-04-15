@@ -1,11 +1,22 @@
-import { type Packet } from "./Packet.ts";
+import { type MainPacket, type WorkerPacket } from "./Packet.ts";
 import {
   EngineLoop,
   CanvasGraphics,
   InputHandler,
   CanvasRectSprite,
 } from "./Engine";
-import { Player, Game, MS_PER_UPDATE, applyUnits, units } from "./Game";
+import {
+  Player,
+  Game,
+  MS_PER_UPDATE,
+  applyUnits,
+  units,
+  createPlayerPropertiesStream,
+} from "./Game";
+
+function sendPacket(packet: WorkerPacket, transfer?: Transferable[]): void {
+  self.postMessage(packet, { transfer });
+}
 
 interface WorkerState {
   player: Player;
@@ -17,7 +28,7 @@ let state: WorkerState | undefined;
 
 // eslint-disable-next-line unicorn/prefer-add-event-listener
 self.onmessage = (message) => {
-  let packet = message.data as Packet;
+  let packet = message.data as MainPacket;
 
   switch (packet.op) {
     case "start": {
@@ -38,6 +49,9 @@ self.onmessage = (message) => {
       engineLoop.start();
 
       state = { player, game, input, engineLoop };
+
+      const propertiesStream = createPlayerPropertiesStream(player);
+      sendPacket({ op: "ready", propertiesStream }, [propertiesStream]);
       break;
     }
 

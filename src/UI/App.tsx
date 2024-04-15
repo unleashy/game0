@@ -1,15 +1,24 @@
 import { useEffect, useMemo } from "react";
-import { type Packet } from "../Packet.ts";
+import {
+  type MainPacket,
+  type WorkerPacket,
+  type WorkerPacketOf,
+} from "../Packet.ts";
 import { type PlayerSettings } from "../Game";
 import { Canvas } from "./Canvas.tsx";
+import { PropertiesPanel } from "./PropertiesPanel.tsx";
 import { SettingsPanel } from "./SettingsPanel.tsx";
 
 export interface AppProps {
-  sendPacket: (packet: Packet, transfer?: Transferable[]) => void;
+  sendPacket: (packet: MainPacket, transfer?: Transferable[]) => void;
+  onPacket: <Op extends WorkerPacket["op"]>(
+    op: Op,
+    f: (packet: WorkerPacketOf<Op>) => void,
+  ) => () => void;
   initialSettings: PlayerSettings;
 }
 
-export function App({ sendPacket, initialSettings }: AppProps) {
+export function App({ sendPacket, onPacket, initialSettings }: AppProps) {
   const on = useMemo(
     () => ({
       canvasInit: (canvas: OffscreenCanvas) =>
@@ -38,23 +47,7 @@ export function App({ sendPacket, initialSettings }: AppProps) {
 
   return (
     <main>
-      <div>
-        <h2 className="panel-header">Properties</h2>
-
-        <dl className="dl-panel">
-          <dt>Position</dt>
-          <dd>0.000</dd>
-          <dd>0.000</dd>
-
-          <dt>Velocity</dt>
-          <dd>0.000</dd>
-          <dd>0.000</dd>
-
-          <dt>Acceleration</dt>
-          <dd>0.000</dd>
-          <dd>0.000</dd>
-        </dl>
-      </div>
+      <PropertiesPanel onPacket={onPacket} />
 
       <Canvas width={320} height={240} onInit={on.canvasInit} />
 
